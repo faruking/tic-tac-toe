@@ -3,45 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit&display=swap" rel="stylesheet">
 
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+  <link href="style.css" rel="stylesheet">
   
   <title>Frontend Mentor | Tic Tac Toe</title>
 </head>
 <body>
+  <main>
+    <div class="game_area">
+      <div class="item">
+        <img src="./assets/logo.svg"/>
+      </div>
+      <div class="item">
+        <div class="flex_item">
+          PICK PLAYER 1'S MARK
+        </div>
+        <div class="flex_item">
+          <button class="xoro" id="xoro_x">
+            <img src="./assets/icon-x(silver).svg"/>
+          </button><button class="xoro"><img src="./assets/icon-o(grey).svg"/></button>
+        </div>
+        <div class="flex_item" style="opacity: 0.5;">
+          REMEMBER: X GOES FIRST
+        </div>
+      </div>
+      <div class="item">
+        <button id="button_yellow">
+          New Game (vs CPU)
+        </button>
+        <button id="button_green">
+          New Game (vs player)
+        </button>
+      </div>
 
-  <!-- New game menu start -->
+    </div>
+  </main>
 
-  Pick player 1's mark
-  Remember: X goes first
-
-  New Game (vs CPU)
-  New Game (vs player)
-
-  <!-- New game menu end -->
-
-  <!-- Game board start -->
-
-  <!-- x/o icon --> turn
-
-  X (You) <!-- Your score -->
-  Ties <!-- Ties score -->
-  X (CPU) <!-- CPU score -->
-
-  Oh no, you lost
-  You won!
-  Player <!-- 1/2 --> wins!
-
-  <!-- x/o icon --> takes the round
-  Round tied
-  Restart game?
-
-  Quit
-  Next round
-  No, cancel
-  Yes, restart
-
-  <!-- Game board end -->
 
 </body>
 </html>
