@@ -24,25 +24,86 @@
         </div>
         <div class="flex_item">
           <button class="xoro" id="xoro_x">
-            <img src="./assets/icon-x(silver).svg"/>
-          </button><button class="xoro"><img src="./assets/icon-o(grey).svg"/></button>
+            <img src="./assets/icon-x(silver).svg" id="x_silver"/>
+            <img src="./assets/icon-x_navyBlue.svg" id="x_blue" style="display: none;"/>
+          </button><button class="xoro" id="xoro_o">
+            <img src="./assets/icon-o(grey).svg" id="o_blue"/>
+            <img src="./assets/icon-o(silver).svg" id="o_silver" style="display: none;"/>
+          </button>
         </div>
         <div class="flex_item" style="opacity: 0.5;">
           REMEMBER: X GOES FIRST
         </div>
       </div>
       <div class="item">
-        <button id="button_yellow">
+        <button id="button_yellow" >
           New Game (vs CPU)
         </button>
-        <button id="button_green">
+        <button id="button_green"  onclick="location.href = 'start_game.html'">
           New Game (vs player)
         </button>
       </div>
 
     </div>
   </main>
-
+  <script>
+    var player_one = 'O';
+  var player_two = 'X';
+  var element = document.getElementById("xoro_x");
+  var elementO = document.getElementById("xoro_o");
+  var x_silver = document.getElementById('x_silver');
+  var x_blue = document.getElementById('x_blue');
+  var o_blue = document.getElementById('o_blue');
+  var o_silver = document.getElementById('o_silver');
+  var button_yellow = document.getElementById('button_yellow');
+  var button_green = document.getElementById('button_green');
+  
+   //homepage functions
+   alert(element);
+  element.onclick = function(){
+   element.style.background = "#A8BFC9";
+   elementO.style.background = "none";
+   x_blue.style.display = '';
+   x_silver.style.display = 'none';
+   o_blue.style.display = 'none';
+   o_silver.style.display = '';
+   player_one = 'X';
+   localStorage.setItem('player_one','X');
+  }
+  elementO.onclick = function(){
+   elementO.style.background = "#A8BFC9";
+   element.style.background = "none";
+   o_blue.style.display = '';
+   o_silver.style.display = 'none';
+   x_blue.style.display = 'none';
+   x_silver.style.display = '';
+  }
+  button_yellow.onclick = ()=>{
+   location.href = 'start_game.html';
+   var p1 = localStorage.getItem('player_one');
+   switch(player_one){
+     case 'X': player_two = 'CPU_O';
+     break;
+     case 'O': player_two = 'CPU_X';
+     break;
+     default: console.log('error assigning tags to players');
+   }
+   alert(player_two);
+  }
+  button_green.onclick = ()=>{
+   location.href = 'start_game.html';
+   var p1 = localStorage.getItem('player_one');
+   switch(player_one){
+     case 'X': player_two = 'PLAYER_TWO_O';
+     break;
+     case 'O': player_two = 'PLAYER_TWO_X';
+     break;
+     default: console.log('error assigning tags to players');
+   }
+   alert(player_two);
+  }
+  </script>
 
 </body>
+
 </html>

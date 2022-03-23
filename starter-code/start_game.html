@@ -1,36 +1,201 @@
-  <!-- New game menu start -->
-
-  <!-- New game menu end -->
-
-  <!-- Game board start -->
-
-  <!-- x/o icon --> turn
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+  <link href="style.css" rel="stylesheet">
+ 
+
+  <title>Frontend Mentor | Tic Tac Toe</title>
 </head>
+
 <body>
-    X (You) <!-- Your score -->
-    Ties <!-- Ties score -->
-    X (CPU) <!-- CPU score -->
-  
-    Oh no, you lost
-    You won!
-    Player <!-- 1/2 --> wins!
-  
-    <!-- x/o icon --> takes the round
-    Round tied
-    Restart game?
-  
-    Quit
-    Next round
-    No, cancel
-    Yes, restart
-  
-    <!-- Game board end -->
+  <main>
+    <div class="restart-game" id="restart_dialog">
+      <h2>RESTART GAME?</h2>
+      <div  class="win_loss_round"> <button class="button_grey" onclick="close_dialog()">NO, CANCEL</button>
+        <button class="button_yellow" onclick="restart()">YES, RESTART</button>
+      </div>
+    </div>
+    <div class="restart-game" id="winloss_dialog">
+      <h5 id="win_status">YOU WON!</h5>
+      <div class="win_loss_round" id="x_takes_the_round" style="display: none;">
+       <div class="win_loss_round_item" >
+        <img src="./assets/icon-x.svg"/>
+       </div>
+       <div class="win_loss_round_item">
+        <h2 style="color: #31C3BD;">TAKES THE ROUND</h2>
+       </div>
+      </div>
+
+      <div class="win_loss_round" id="o_takes_the_round">
+        <div class="win_loss_round_item" >
+         <img src="./assets/icon-o.svg"/>
+        </div>
+        <div class="win_loss_round_item">
+         <h2 style="color: #F2B137;">TAKES THE ROUND</h2>
+        </div>
+       </div>
+      
+      <div class="win_loss_round"> <button class="button_grey" onclick="quit()">QUIT</button>
+        <button class="button_yellow" onclick="close_winloss_dialog()">NEXT ROUND</button>
+      </div>
+    </div>
+    <div class="main_flex">
+
+      <div class="start_game_flex_item">
+        <div class="start_game_ifi">
+          <img src="./assets/logo.svg" />
+        </div>
+        <div class="start_game_ifi">
+          <div class="turn_button_item">
+            <img src="./assets/icon-x(silver).svg" id="x_turn" style="width: 20px;height: 20px;" />
+            <img src="./assets/icon-o(silver).svg" id="o_turn" style="width: 20px;height: 20px;display: none;" />
+          </div>
+          <div class="turn_button_item">TURN</div>
+        </div>
+        <div class="start_game_ifi" id="restart" onclick="display_dialog()">
+          <img src="./assets/icon-restart.svg" />
+        </div>
+      </div>
+      <div class="start_game_flex_item">
+        <div class="grid_item" id="first_tile"
+          onmouseover="onHover('first_tile','x1_filled','x1_outline','o1_filled','o1_outline')"
+          onmouseout="onMouseOut('x1_outline','o1_outline')"
+          onclick="onMouseClick('x1_filled','x1_outline','o1_filled','o1_outline')">
+          <img src="./assets/icon-x.svg" id="x1_filled"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-x-outline.svg" id="x1_outline"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-o.svg" id="o1_filled"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-o-outline.svg" id="o1_outline"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+        </div>
+        <div class="grid_item" id="second_tile"
+          onmouseover="onHover('second_tile','x2_filled','x2_outline','o2_filled','o2_outline')"
+          onmouseout="onMouseOut('x2_outline','o2_outline')"
+          onclick="onMouseClick('x2_filled','x2_outline','o2_filled','o2_outline')">
+          <img src="./assets/icon-x.svg" id="x2_filled"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-x-outline.svg" id="x2_outline"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-o.svg" id="o2_filled"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-o-outline.svg" id="o2_outline"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+        </div>
+        <div class="grid_item" id="third_tile"
+          onmouseover="onHover('third_tile','x3_filled','x3_outline','o3_filled','o3_outline')"
+          onmouseout="onMouseOut('x3_outline','o3_outline')"
+          onclick="onMouseClick('x3_filled','x3_outline','o3_filled','o3_outline')">
+          <img src="./assets/icon-x.svg" id="x3_filled"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-x-outline.svg" id="x3_outline"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-o.svg" id="o3_filled"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-o-outline.svg" id="o3_outline"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+        </div>
+        <div class="grid_item" id="fourth_tile"
+          onmouseover="onHover('fourth_tile','x4_filled','x4_outline','o4_filled','o4_outline')"
+          onmouseout="onMouseOut('x4_outline','o4_outline')"
+          onclick="onMouseClick('x4_filled','x4_outline','o4_filled','o4_outline')">
+          <img src="./assets/icon-x.svg" id="x4_filled"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-x-outline.svg" id="x4_outline"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-o.svg" id="o4_filled"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-o-outline.svg" id="o4_outline"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+        </div>
+        <div class="grid_item" id="fifth_tile"
+          onmouseover="onHover('fifth_tile','x5_filled','x5_outline','o5_filled','o5_outline')"
+          onmouseout="onMouseOut('x5_outline','o5_outline')"
+          onclick="onMouseClick('x5_filled','x5_outline','o5_filled','o5_outline')">
+          <img src="./assets/icon-x.svg" id="x5_filled"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-x-outline.svg" id="x5_outline"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-o.svg" id="o5_filled"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-o-outline.svg" id="o5_outline"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+        </div>
+        <div class="grid_item" id="sixth_tile"
+          onmouseover="onHover('sixth_tile','x6_filled','x6_outline','o6_filled','o6_outline')"
+          onmouseout="onMouseOut('x6_outline','o6_outline')"
+          onclick="onMouseClick('x6_filled','x6_outline','o6_filled','o6_outline')">
+          <img src="./assets/icon-x.svg" id="x6_filled"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-x-outline.svg" id="x6_outline"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-o.svg" id="o6_filled"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-o-outline.svg" id="o6_outline"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+        </div>
+        <div class="grid_item" id="seventh_tile"
+          onmouseover="onHover('seventh_tile','x7_filled','x7_outline','o7_filled','o7_outline')"
+          onmouseout="onMouseOut('x7_outline','o7_outline')"
+          onclick="onMouseClick('x7_filled','x7_outline','o7_filled','o7_outline')">
+          <img src="./assets/icon-x.svg" id="x7_filled"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-x-outline.svg" id="x7_outline"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-o.svg" id="o7_filled"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-o-outline.svg" id="o7_outline"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+        </div>
+        <div class="grid_item" id="eight_tile"
+          onmouseover="onHover('eight_tile','x8_filled','x8_outline','o8_filled','o8_outline')"
+          onmouseout="onMouseOut('x8_outline','o8_outline')"
+          onclick="onMouseClick('x8_filled','x8_outline','o8_filled','o8_outline')">
+          <img src="./assets/icon-x.svg" id="x8_filled"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-x-outline.svg" id="x8_outline"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-o.svg" id="o8_filled"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-o-outline.svg" id="o8_outline"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+        </div>
+        <div class="grid_item" id="ninth_tile"
+          onmouseover="onHover('ninth_tile','x9_filled','x9_outline','o9_filled','o9_outline')"
+          onmouseout="onMouseOut('x9_outline','o9_outline')"
+          onclick="onMouseClick('x9_filled','x9_outline','o9_filled','o9_outline')">
+          <img src="./assets/icon-x.svg" id="x9_filled"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-x-outline.svg" id="x9_outline"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-o.svg" id="o9_filled"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+          <img src="./assets/icon-o-outline.svg" id="o9_outline"
+            style="display: none; margin-top: 50%; margin-left: 50%; transform: translate(-50%, -50%)" />
+        </div>
+
+      </div>
+      <div class="start_game_flex_item">
+        <button class="button_scores" id="you_button">X (YOU)
+          <br><span id="personal_scores">0</span></button>
+        <button class="button_scores" id="ties_button">TIES<br>
+          <span id="ties_scores">0</span></button>
+        <button class="button_scores" id="cpu_button">O (CPU)<br>
+          <span id="cpu_scores">0</span></button>
+      </div>
+    </div>
+  </main>
+   
 </body>
+<script src="script.js"></script>
 </html>
