@@ -76,13 +76,13 @@ var validMove = [
   [5, 6, 8]
 ]
 
-if (p1 == 'X' && p2 == 'CPU_O') {
-  x_score_label.innerHTML = 'X(YOU)';
-  o_score_label.innerHTML = 'O(CPU)';
+if (p1 == 'X' && p2 == 'PLAYER_TWO_O') {
+  x_score_label.innerHTML = 'X(P1)';
+  o_score_label.innerHTML = 'O(P2)';
 }
-else if (p1 == 'O' && p2 == 'CPU_X') {
-  x_score_label.innerHTML = 'X (CPU)';
-  o_score_label.innerHTML = 'O (YOU)';
+else if (p1 == 'O' && p2 == 'PLAYER_TWO_X') {
+  x_score_label.innerHTML = 'X (P2)';
+  o_score_label.innerHTML = 'O (P1)';
 }
 
 // functions
@@ -151,10 +151,6 @@ function onMouseClick(x, image, o, o_outline,) {
                 validMovesforX(x_filled, x_outline, o_filled, o_outline);
                 win();
                 ties(ind);
-                if (number_of_o == 3 && p2 == 'CPU_O') {
-                  playerTwo.move(oElementArray, xElementArray, number_of_o);
-                  nextTurn();
-                }
                 return;
               }
             }
@@ -170,10 +166,6 @@ function onMouseClick(x, image, o, o_outline,) {
             o_filled.style.display = 'none';
             o_outline.style.display = 'none';
             win();
-            if (number_of_o < 3 && p2 == 'CPU_O') {
-              playerTwo.move(oElementArray, xElementArray, number_of_o);
-              nextTurn();
-            }
           }
         }
       }
@@ -190,7 +182,7 @@ function onMouseClick(x, image, o, o_outline,) {
   }
   //If it's O's turn
   else {
-    console.log(number_of_o+'o');
+    console.log(number_of_o);
     // If it does not contain X or O already    
     if (x_filled.style.display == 'none' && o_filled.style.display == 'none' && number_of_o < 3) {
       // making sure a tile is moved from it's initial position to a NEW point
@@ -213,10 +205,6 @@ function onMouseClick(x, image, o, o_outline,) {
                 validMovesforO(x_filled, x_outline, o_filled, o_outline);
                 winO();
                 tiesO(ind);
-                if (number_of_x == 3 && p2 == 'CPU_X') {
-                  playerTwo.move(xElementArray, oElementArray, number_of_x);
-                  nextTurn();
-                }
                 return;
               }
             }
@@ -232,13 +220,6 @@ function onMouseClick(x, image, o, o_outline,) {
             o_filled.style.display = 'block';
             o_outline.style.display = 'none';
             winO();
-            if (number_of_x < 3 && p2 == 'CPU_X') {
-              // tryToWin(p2);
-              // win();
-              console.log('its me again');
-              playerTwo.move(xElementArray, oElementArray, number_of_x);
-              nextTurn();
-            }
           }
         }
       }
@@ -308,12 +289,12 @@ function win() {
     if (a === b && b === c) {
       var p2 = localStorage.getItem('player_two');
       switch (p2) {
-        case 'CPU_X': win_status.innerHTML = 'OH NO, YOU LOST...';
+        case 'PLAYER_TWO_X': win_status.innerHTML = 'PLAYER 2 WINS!';
           winloss_dialog.style.display = 'flex';
           x_wins.style.display = 'flex';
           o_wins.style.display = 'none';
           break;
-        case 'CPU_O': win_status.innerHTML = 'YOU WON!';
+        case 'PLAYER_TWO_O': win_status.innerHTML = 'PLAYER 1 WINS!';
           winloss_dialog.style.display = 'flex';
           x_wins.style.display = 'flex';
           o_wins.style.display = 'none';
@@ -341,12 +322,12 @@ function winO() {
       var p2 = localStorage.getItem('player_two');
       switch (p2) {
 
-        case 'CPU_X': win_status.innerHTML = 'YOU WON!';
+        case 'PLAYER_TWO_X': win_status.innerHTML = 'PLAYER 1 WINS!';
           winloss_dialog.style.display = 'flex';
           x_wins.style.display = 'none';
           o_wins.style.display = 'flex';
           break;
-        case 'CPU_O': win_status.innerHTML = 'OH NO,YOU LOST...';
+        case 'PLAYER_TWO_O': win_status.innerHTML = 'PLAYER 2 WINS!';
           winloss_dialog.style.display = 'flex';
           x_wins.style.display = 'none';
           o_wins.style.display = 'flex';
@@ -392,10 +373,6 @@ function resume() {
   ties_scores = 0;
   x_turn.style.display = 'block';
   o_turn.style.display = 'none';
-  if(p2== 'CPU_X'){
-    playerTwo.move(xElementArray,oElementArray,number_of_x);
-    nextTurn();
-  }
 }
 // quitting the game
 function quit() {
@@ -483,197 +460,4 @@ function tiesO(currentPosition) {
 }
 function reverseString(str) {
   return str.split("").reverse().join("");
-}
-
-class Player {
-  constructor(name) {
-    this.name = name;
-  }
-
-  move() {
-    console.log('i can move');
-  }
-  win() {
-    console.log('i won');
-  }
-  getPlayerName() {
-    console.log(this.name);
-  }
-  score() {
-
-  }
-
-}
-class CpuPlayer extends Player {
-  move(array1, array2) {
-    let b = Math.floor(Math.random() * 8);
-    let a = Math.floor(Math.random() * 2);
-
-    switch (p2) {
-      case 'CPU_X': if (array1[b].style.display != 'block' && number_of_x < 3 && array2[b].style.display == 'none') {
-        array1[b].style.display = 'block'; 
-        console.log('i ammhere');
-        number_of_x += 1;
-      }
-      else if (array1[b].style.display == 'block' && number_of_x == 2 && array2[b].style.display == 'none') {
-        var displayArray = [];
-        for (let x = 0; x < array1.length; x++) {
-          if (array1[x].style.display == 'block') {
-            displayArray.push(array1[x]);
-          }
-        }
-        console.log(displayArray[a]);
-        displayArray[a].style.display == 'none';
-      }
-      else {
-        this.move(array1, array2);
-      }
-        break;
-      case 'CPU_O': console.log(number_of_o);
-        if (array1[b].style.display != 'block' && number_of_x <= 3 && array2[b].style.display == 'none' && lastPositionO == null && number_of_o<3) {
-          console.log('firstline');
-          console.log(array1[b]);
-          console.log(number_of_x);
-          array1[b].style.display = 'block';
-          number_of_o += 1;
-        } else if (array1[b].style.display == 'block' && number_of_x == 3 && array2[b].style.display == 'none' && lastPositionO != null) {
-          console.log('number of o three');
-          var displayArray = [];
-          for(let x = 0; x < array1.length; x++) {
-            if (array1[x].style.display == 'block') {
-              displayArray.push(array1[x]);
-            }
-          }
-          console.log(displayArray[a]+'a');
-          displayArray[a].style.display = 'none';
-        }else if (array1[b].style.display == 'block' && number_of_x == 3 && array2[b].style.display == 'none' && lastPositionO == null) {
-          console.log('number of o three');
-          var displayArray = [];
-          for(let x = 0; x < array1.length; x++) {
-            if (array1[x].style.display == 'block') {
-              displayArray.push(array1[x]);
-            }
-          }
-          console.log(displayArray[a]+'a');
-          displayArray[a].style.display = 'none';
-        }
-        else {
-          console.log('didnt work');
-          this.move(array1, array2);
-        }
-    }
-  }
-}
-
-
-
-// //  console.log(numberRounded);
-
-if (p1 == 'X' && p2 == 'CPU_O') {
-  playerTwo = new CpuPlayer('o_cpu_player2');
-  x_score_label.innerHTML = 'X (YOU)';
-  o_score_label.innerHTML = 'O (CPU)';
-}
-else if (p1 == 'O' && p2 == 'CPU_X') {
-  playerTwo = new CpuPlayer('x_cpu_player2')
-  x_score_label.innerHTML = 'X (CPU)';
-  o_score_label.innerHTML = 'O (YOU)';
-  playerTwo.move(xElementArray, oElementArray);
-  nextTurn();
-  console.log(number_of_x+'xxxx');
-}
-// getting the computer to automatically try an win the game when there is an opening
-function tryToWin(currentPlayer){
-  // if(array[0].style.display == 'block' && array[])
-  switch(currentPlayer){
-    case 'CPU_X': for(let x = 0; x<=7;x++){
-    const winCondition = winningConditions[x];
-    let a = xElementArray[winCondition[0]].style.display;
-    let b = xElementArray[winCondition[1]].style.display;
-    let c = xElementArray[winCondition[2]].style.display;
-
-    let aOther = oElementArray[winCondition[0]].style.display;
-    let bOther = oElementArray[winCondition[1]].style.display;
-    let cOther = oElementArray[winCondition[2]].style.display;
-    if (a ===  b && b !== c && cOther === 'none') {
-      console.log('gooood');
-      c = 'block';
-    }
-    else if(a ===  c && c !== b && bOther === 'none'){
-      b = 'block';
-    }
-    else if(b ===  c && a !== a && aOther === 'none'){
-      a = 'block';
-    }
-    } 
-    break;
-    case 'CPU_O':for(let x = 0; x<=7;x++){
-      const winCondition = winningConditions[x];
-      let a = oElementArray[winCondition[0]].style.display;
-      let b = oElementArray[winCondition[1]].style.display;
-      let c = oElementArray[winCondition[2]].style.display;
-  
-      let aOther = xElementArray[winCondition[0]].style.display;
-      let bOther = xElementArray[winCondition[1]].style.display;
-      let cOther = xElementArray[winCondition[2]].style.display;
-      if (a ===  b && b !== c && cOther === 'none') {
-        console.log('gooood');
-        c = 'block';
-      }
-      else if(a ===  c && c !== b && bOther === 'none'){
-        b = 'block';
-      }
-      else if(b ===  c && a !== a && aOther === 'none'){
-        a = 'block';
-      }
-      } 
-      break;
-  }
-}
-function blockMove(currentPlayer){
-  // if(array[0].style.display == 'block' && array[])
-  switch(currentPlayer){
-    case 'CPU_X': for(let x = 0; x<=7;x++){ 
-    const winCondition = winningConditions[x];
-    let a = xElementArray[winCondition[0]].style.display;
-    let b = xElementArray[winCondition[1]].style.display;
-    let c = xElementArray[winCondition[2]].style.display;
-
-    let aOther = oElementArray[winCondition[0]].style.display;
-    let bOther = oElementArray[winCondition[1]].style.display;
-    let cOther = oElementArray[winCondition[2]].style.display;
-    if (a ===  b && b !== c && cOther === 'none') {
-      console.log('gooood');
-      c = 'block';
-    }
-    else if(a ===  c && c !== b && bOther === 'none'){
-      b = 'block';
-    }
-    else if(b ===  c && a !== a && aOther === 'none'){
-      a = 'block';
-    }
-    } 
-    break;
-    case 'CPU_O':for(let x = 0; x<=7;x++){
-      const winCondition = winningConditions[x];
-      let a = oElementArray[winCondition[0]].style.display;
-      let b = oElementArray[winCondition[1]].style.display;
-      let c = oElementArray[winCondition[2]].style.display;
-  
-      let aOther = xElementArray[winCondition[0]].style.display;
-      let bOther = xElementArray[winCondition[1]].style.display;
-      let cOther = xElementArray[winCondition[2]].style.display;
-      if (a ===  b && b !== c && cOther === 'none') {
-        console.log('noitgooood');
-        c = 'block';
-      }
-      else if(a ===  c && c !== b && bOther === 'none'){
-        b = 'block';
-      }
-      else if(b ===  c && a !== a && aOther === 'none'){
-        a = 'block';
-      }
-      } 
-      break;
-  }
 }

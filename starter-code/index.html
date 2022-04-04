@@ -47,7 +47,7 @@
     </div>
   </main>
   <script>
-    var player_one = 'O';
+  var p1 = localStorage.setItem('player_one','O');
   var player_two = 'X';
   var element = document.getElementById("xoro_x");
   var elementO = document.getElementById("xoro_o");
@@ -59,7 +59,6 @@
   var button_green = document.getElementById('button_green');
   
    //homepage functions
-   alert(element);
   element.onclick = function(){
    element.style.background = "#A8BFC9";
    elementO.style.background = "none";
@@ -67,7 +66,7 @@
    x_silver.style.display = 'none';
    o_blue.style.display = 'none';
    o_silver.style.display = '';
-   player_one = 'X';
+  //  player_one = 'X';
    localStorage.setItem('player_one','X');
   }
   elementO.onclick = function(){
@@ -77,26 +76,33 @@
    o_silver.style.display = 'none';
    x_blue.style.display = 'none';
    x_silver.style.display = '';
+  //  player_one = 'O';
+   localStorage.setItem('player_one','O');
   }
   button_yellow.onclick = ()=>{
    location.href = 'start_game.html';
-   var p1 = localStorage.getItem('player_one');
-   switch(player_one){
+   p1 = localStorage.getItem('player_one');
+   switch(p1){
      case 'X': player_two = 'CPU_O';
+     localStorage.setItem('player_two','CPU_O');
      break;
      case 'O': player_two = 'CPU_X';
+     localStorage.setItem('player_two','CPU_X');
      break;
      default: console.log('error assigning tags to players');
    }
-   alert(player_two);
+   var p2 = localStorage.getItem('player_two');
+   alert(p2);
   }
   button_green.onclick = ()=>{
-   location.href = 'start_game.html';
-   var p1 = localStorage.getItem('player_one');
-   switch(player_one){
+   location.href = 'p1vsp2.html';
+   p1 = localStorage.getItem('player_one');
+   switch(p1){
      case 'X': player_two = 'PLAYER_TWO_O';
+     localStorage.setItem('player_two','PLAYER_TWO_O');
      break;
      case 'O': player_two = 'PLAYER_TWO_X';
+     localStorage.setItem('player_two','PLAYER_TWO_X');
      break;
      default: console.log('error assigning tags to players');
    }
