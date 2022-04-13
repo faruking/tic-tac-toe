@@ -49,9 +49,42 @@ var o7_filled = document.getElementById('o7_filled');
 var o8_filled = document.getElementById('o8_filled');
 var o9_filled = document.getElementById('o9_filled');
 
+var x1_outline = document.getElementById('x1_outline');
+var x2_outline = document.getElementById('x2_outline');
+var x3_outline = document.getElementById('x3_outline');
+var x4_outline = document.getElementById('x4_outline');
+var x5_outline = document.getElementById('x5_outline');
+var x6_outline = document.getElementById('x6_outline');
+var x7_outline = document.getElementById('x7_outline');
+var x8_outline = document.getElementById('x8_outline');
+var x9_outline = document.getElementById('x9_outline');
+
+var o1_outline = document.getElementById('o1_outline');
+var o2_outline = document.getElementById('o2_outline');
+var o3_outline = document.getElementById('o3_outline');
+var o4_outline = document.getElementById('o4_outline');
+var o5_outline = document.getElementById('o5_outline');
+var o6_outline = document.getElementById('o6_outline');
+var o7_outline = document.getElementById('o7_outline');
+var o8_outline = document.getElementById('o8_outline');
+var o9_outline = document.getElementById('o9_outline');
+
+var tile1 = document.getElementById('first_tile');
+var tile2 = document.getElementById('second_tile');
+var tile3 = document.getElementById('third_tile');
+var tile4 = document.getElementById('fourth_tile');
+var tile5 = document.getElementById('fifth_tile');
+var tile6 = document.getElementById('sixth_tile');
+var tile7 = document.getElementById('seventh_tile');
+var tile8 = document.getElementById('eight_tile');
+var tile9 = document.getElementById('ninth_tile');
+
 var elementArray = [x1_filled, x2_filled, x3_filled, x4_filled, x5_filled, x6_filled, x7_filled, x8_filled, x9_filled, o1_filled, o2_filled, o3_filled, o4_filled, o5_filled, o6_filled, o7_filled, o8_filled, o9_filled];
 var xElementArray = [x1_filled, x2_filled, x3_filled, x4_filled, x5_filled, x6_filled, x7_filled, x8_filled, x9_filled];
 var oElementArray = [o1_filled, o2_filled, o3_filled, o4_filled, o5_filled, o6_filled, o7_filled, o8_filled, o9_filled];
+var xOutlineArray = [x1_outline, x2_outline, x3_outline, x4_outline, x5_outline, x6_outline, x7_outline, x8_outline, x9_outline];
+var oOutlineArray = [o1_outline, o2_outline, o3_outline, o4_outline, o5_outline, o6_outline, o7_outline, o8_outline, o9_outline];
+var tileArray = [tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8, tile9];
 //  console.log(numberRounded);
 var gameState = ["", "", "", "", "", "", "", "", ""]
 var winningConditions = [
@@ -74,6 +107,17 @@ var validMove = [
   [4, 5, 8],
   [4, 5, 6, 7, 9],
   [5, 6, 8]
+]
+var reversedValidMove = [
+  [1, 3, 4],
+  [0, 2, 3, 4, 5],
+  [1, 4, 5],
+  [0, 1, 4, 6, 7],
+  [0, 1, 2, 3, 5, 6, 7, 8],
+  [1, 2, 4, 7, 8],
+  [3, 4, 7],
+  [3, 4, 5, 6, 8],
+  [4, 5, 7]
 ]
 
 if (p1 == 'X' && p2 == 'CPU_O') {
@@ -118,7 +162,7 @@ function onMouseOut(image, o_outline) {
   o_outline.style.display = 'none';
 
 }
-// logicfor when a tile is clicked
+// logic for when a tile is clicked
 function onMouseClick(x, image, o, o_outline,) {
   var x_filled = document.getElementById(x);
   var x_outline = document.getElementById(image);
@@ -137,7 +181,7 @@ function onMouseClick(x, image, o, o_outline,) {
       }
       else {
         //making sure X is not more than three on the board
-        if (number_of_x <=3) {
+        if (number_of_x <= 3) {
           var index = x_filled.id;
           var ind = index[1];
 
@@ -153,7 +197,7 @@ function onMouseClick(x, image, o, o_outline,) {
                 win();
                 ties(ind);
                 if (number_of_o == 3 && p2 == 'CPU_O') {
-                  playerTwo.move(oElementArray, xElementArray, number_of_o);
+                 move(oElementArray, xElementArray, number_of_o);
                   nextTurn();
                 }
                 return;
@@ -172,7 +216,7 @@ function onMouseClick(x, image, o, o_outline,) {
             o_outline.style.display = 'none';
             win();
             if (number_of_o < 3 && p2 == 'CPU_O') {
-              playerTwo.move(oElementArray, xElementArray, number_of_o);
+              move(oElementArray, xElementArray, number_of_o);
               nextTurn();
             }
           }
@@ -191,7 +235,7 @@ function onMouseClick(x, image, o, o_outline,) {
   }
   //If it's O's turn
   else {
-    console.log(number_of_o+'o');
+    console.log(number_of_o + 'o');
     // If it does not contain X or O already    
     if (x_filled.style.display == 'none' && o_filled.style.display == 'none' && number_of_o < 3) {
       // making sure a tile is moved from it's initial position to a NEW point
@@ -215,7 +259,8 @@ function onMouseClick(x, image, o, o_outline,) {
                 winO();
                 tiesO(ind);
                 if (number_of_x == 3 && p2 == 'CPU_X') {
-                  playerTwo.move(xElementArray, oElementArray, number_of_x);
+                  // blockMove(oElementArray,xElementArray);
+                  move(xElementArray, oElementArray, number_of_x);
                   nextTurn();
                 }
                 return;
@@ -237,11 +282,12 @@ function onMouseClick(x, image, o, o_outline,) {
               // tryToWin(p2);
               // win();
               console.log('its me again');
-              playerTwo.move(xElementArray, oElementArray, number_of_x);
+              // tryToWin('CPU_X');
+             move(xElementArray, oElementArray, number_of_x);
               nextTurn();
             }
-            else if(number_of_x == 3 && p2 == 'CPU_X'){
-              playerTwo.anotherMove(xElementArray,oElementArray);
+            else if (number_of_x == 3 && p2 == 'CPU_X') {
+              tryToWin(xElementArray, oElementArray);
             }
           }
         }
@@ -303,19 +349,40 @@ function validMovesforO(x_filled, x_outline, o_filled, o_outline) {
 function win() {
   for (let i = 0; i <= 7; i++) {
     const winCondition = winningConditions[i];
-    let a = xElementArray[winCondition[0]].style.display;
-    let b = xElementArray[winCondition[1]].style.display;
-    let c = xElementArray[winCondition[2]].style.display;
+    var a = xElementArray[winCondition[0]].style.display;
+    var b = xElementArray[winCondition[1]].style.display;
+    var c = xElementArray[winCondition[2]].style.display;
+
+    var aa = xOutlineArray[winCondition[0]].style.display;
+    var bb = xOutlineArray[winCondition[1]].style.display;
+    var cc = xOutlineArray[winCondition[2]].style.display;
+
+    var aTile = tileArray[winCondition[0]].style.background;
+    var bTile = tileArray[winCondition[1]].style.background;
+    var cTile = tileArray[winCondition[2]].style.background;
     if (a === 'none' || b === 'none' || c === 'none') {
       continue;
     }
     if (a === b && b === c) {
       var p2 = localStorage.getItem('player_two');
       switch (p2) {
-        case 'CPU_X': win_status.innerHTML = 'OH NO, YOU LOST...';
+        case 'CPU_X': {
+          win_status.innerHTML = 'OH NO, YOU LOST...';
+          console.log(aa + 'aa' + bb + 'bb' + aTile + 'atile' + a + 'a');
+          xElementArray[winCondition[0]].style.displa = 'none';
+          xElementArray[winCondition[1]].style.display = 'none';
+          xElementArray[winCondition[2]].style.display = 'none';
+          xOutlineArray[winCondition[0]].style.display = 'block';
+          xOutlineArray[winCondition[1]].style.display = 'block';
+          xOutlineArray[winCondition[2]].style.display = 'block';
+          tileArray[winCondition[0]].style.backgroundColor = '#31C3BD';
+          tileArray[winCondition[1]].style.backgroundColor = '#31C3BD';
+          tileArray[winCondition[2]].style.backgroundColor = '#31C3BD';
+          // x1_outline.style.display= 'block';
           winloss_dialog.style.display = 'flex';
           x_wins.style.display = 'flex';
           o_wins.style.display = 'none';
+        }
           break;
         case 'CPU_O': win_status.innerHTML = 'YOU WON!';
           winloss_dialog.style.display = 'flex';
@@ -363,7 +430,7 @@ function winO() {
     }
   }
 }
-// opening te dialog for restart
+// opening the dialog for restart
 function display_dialog() {
   restart_dialog.style.display = 'flex';
 }
@@ -376,6 +443,7 @@ function close_winloss_dialog() {
   winloss_dialog.style.display = 'none';
   resume();
 }
+//openning the dialog for when game is tied
 function close_game_tied_dialog() {
   game_tied_dialog.style.display = 'none';
   resume();
@@ -384,6 +452,16 @@ function close_game_tied_dialog() {
 function resume() {
   for (x = 0; x < elementArray.length; x++) {
     elementArray[x].style.display = 'none';
+  }
+  for (x = 0; x < oOutlineArray.length; x++) {
+    oOutlineArray[x].style.display = 'none';
+  }
+  for (x = 0; x < xOutlineArray.length; x++) {
+    xOutlineArray[x].style.display = 'none';
+  }
+  for (x = 0; x < tileArray.length; x++) {
+    tileArray[x].style.backgroundColor = '';
+    tileArray[x].style.background= '';
   }
   var score = document.getElementById('cpu_scores');
   number_of_o = 0;
@@ -396,8 +474,8 @@ function resume() {
   ties_scores = 0;
   x_turn.style.display = 'block';
   o_turn.style.display = 'none';
-  if(p2== 'CPU_X'){
-    playerTwo.move(xElementArray,oElementArray,number_of_x);
+  if (p2 == 'CPU_X') {
+    move(xElementArray, oElementArray, number_of_x);
     nextTurn();
   }
 }
@@ -429,6 +507,7 @@ function nextTurn() {
     o_turn.style.display = 'block';
   }
 }
+// logic for a tie
 function ties(currentPosition) {
   var indexOfLastPosition = lastPositionX[1];
   var joinedString = indexOfLastPosition + currentPosition;
@@ -456,6 +535,7 @@ function ties(currentPosition) {
     }
   }
 }
+// logic for a tie
 function tiesO(currentPosition) {
   var indexOfLastPosition = lastPositionO[1];
   var joinedString = indexOfLastPosition + currentPosition;
@@ -488,45 +568,25 @@ function tiesO(currentPosition) {
 function reverseString(str) {
   return str.split("").reverse().join("");
 }
-
-class Player {
-  constructor(name) {
-    this.name = name;
-  }
-
-  move() {
-    console.log('i can move');
-  }
-  win() {
-    console.log('i won');
-  }
-  getPlayerName() {
-    console.log(this.name);
-  }
-  score() {
-
-  }
-
-}
-class CpuPlayer extends Player {
-  move(array1, array2) {
+//logic for computer move
+  function move(array1, array2) {
     let b = Math.floor(Math.random() * 8);
     let a = Math.floor(Math.random() * 2);
     array1.forEach(element => {
-      if(element==='none'){
-        element='empty';
+      if (element === 'none') {
+        element = 'empty';
         console.log(array1);
-      } 
+      }
     });
 
     switch (p2) {
-      case 'CPU_X': if (array1[b].style.display != 'block' && number_of_x < 4 && array2[b].style.display == 'none'&& lastPositionX == null && number_of_x<3) {
-        array1[b].style.display = 'block'; 
+      case 'CPU_X': if (array1[b].style.display != 'block' && number_of_x < 4 && array2[b].style.display == 'none' && lastPositionX == null && number_of_x < 3) {
+        array1[b].style.display = 'block';
         // console.log('i ammhere');
         number_of_x += 1;
         win();
       }
-      else if (array1[b].style.display == 'block' && number_of_x == 2 && array2[b].style.display == 'none' && number_of_o == 3&& lastPositionO != null) {
+      else if (array1[b].style.display == 'block' && number_of_x == 2 && array2[b].style.display == 'none' && number_of_o == 3 && lastPositionO != null) {
         var displayArray = [];
         for (let x = 0; x < array1.length; x++) {
           if (array1[x].style.display == 'block') {
@@ -537,7 +597,7 @@ class CpuPlayer extends Player {
         displayArray[a].style.display == 'none';
       }
       else if (number_of_x == 3 && number_of_o == 3 && lastPositionO != null) {
-        playerTwo.anotherMove(xElementArray,oElementArray);
+        tryToWin(xElementArray, oElementArray);
         nextTurn();
       }
       else {
@@ -545,7 +605,7 @@ class CpuPlayer extends Player {
       }
         break;
       case 'CPU_O': console.log(number_of_o);
-        if (array1[b].style.display != 'block' && number_of_x <= 3 && array2[b].style.display == 'none' && lastPositionO == null && number_of_o<3) {
+        if (array1[b].style.display != 'block' && number_of_x <= 3 && array2[b].style.display == 'none' && lastPositionO == null && number_of_o < 3) {
           console.log('firstline');
           console.log(array1[b]);
           console.log(number_of_x);
@@ -555,22 +615,22 @@ class CpuPlayer extends Player {
         } else if (array1[b].style.display == 'block' && number_of_x == 3 && array2[b].style.display == 'none' && lastPositionO != null) {
           console.log('number of o three');
           var displayArray = [];
-          for(let x = 0; x < array1.length; x++) {
+          for (let x = 0; x < array1.length; x++) {
             if (array1[x].style.display == 'block') {
               displayArray.push(array1[x]);
             }
           }
-          console.log(displayArray[a]+'a');
+          console.log(displayArray[a] + 'a');
           displayArray[a].style.display = 'none';
-        }else if (array1[b].style.display == 'block' && number_of_x == 3 && array2[b].style.display == 'none' && lastPositionO == null&& number_of_o==3) {
+        } else if (array1[b].style.display == 'block' && number_of_x == 3 && array2[b].style.display == 'none' && lastPositionO == null && number_of_o == 3) {
           console.log('number of o three');
           var displayArray = [];
-          for(let x = 0; x < array1.length; x++) {
+          for (let x = 0; x < array1.length; x++) {
             if (array1[x].style.display == 'block') {
               displayArray.push(array1[x]);
             }
           }
-          console.log(displayArray[a]+'a');
+          console.log(displayArray[a] + 'a');
           displayArray[a].style.display = 'none';
         }
         else {
@@ -578,162 +638,280 @@ class CpuPlayer extends Player {
           this.move(array1, array2);
         }
     }
-  }
-  anotherMove(array1,array2){
-    let emptyArray = [];//stores tiles that are blank 
-    let intArray = [];//convert emptyArray(string array) to integer array
-    let blockArray = [];// stores tiles that are block
-    for(let x  = 0;x<array1.length;x++){
-      if(array1[x].style.display == 'block'){
-        var id = array1[x].id;
-        blockArray.push(id[1]);  
-      }
-      if(array1[x].style.display == 'none' && array2[x].style.display == 'none'){
-        var id = array1[x].id;
-        emptyArray.push(id[1]);  
-        intArray = emptyArray.map(str=>{
-          return Number(str);
-        })
-      }
-    }
-    for(let x=0;x<blockArray.length;x++){
-      var index = blockArray[x]-1;
-      console.log(index+'index');
-      var localMove = validMove[index];//246
-      // console.log(localMove+'localmove');
-      for(let y=0;y<localMove.length;y++){
-      
-        console.log(intArray+'intarray');
-        if(intArray.includes(localMove[y])){
-          console.log('okay');
-          array1[index].style.display = 'none';
-          array1[localMove[y]-1].style.display = 'block';
-          console.log(localMove[y]+'local');
-          console.log(blockArray);//x=3
-          console.log(intArray);
-          win();
-          nextTurn();
-          return
-        }
-          // this.anotherMove(array1,array2);
-      }
-    }
-  }
 }
-
-
-
-// //  console.log(numberRounded);
-
+//logic for computer move
+function anotherMove(array1, array2) {
+  let emptyArray = [];//stores tiles that are blank 
+  let intArray = [];//convert emptyArray(string array) to integer array
+  let blockArray = [];// stores tiles that are block
+  for (let x = 0; x < array1.length; x++) {
+    if (array1[x].style.display == 'block') {
+      var id = array1[x].id;
+      blockArray.push(id[1]);
+    }
+    if (array1[x].style.display == 'none' && array2[x].style.display == 'none') {
+      var id = array1[x].id;
+      emptyArray.push(id[1]);
+      intArray = emptyArray.map(str => {
+        return Number(str);
+      })
+    }
+  }
+  // for (let x = 0; x < blockArray.length; x++) {
+    // var index = blockArray[x] - 1;
+    var randomNumber = returnRandomNumber();
+    console.log(randomNumber+'randomNumber')
+    var index = blockArray[randomNumber] - 1;
+    console.log(index + 'index');
+    var localMove = validMove[index];//246
+    // console.log(localMove+'localmove');
+    console.log(localMove + 'local move');
+    for (let y = 0; y < localMove.length; y++) {
+      console.log(intArray + 'intarray');
+      if (intArray.includes(localMove[y])) {
+        console.log('okay');
+        array1[index].style.display = 'none';
+        array1[localMove[y] - 1].style.display = 'block';
+        console.log(localMove[y] + 'local');
+        console.log(blockArray);//x=3
+        win();
+        nextTurn();
+        return;
+      }
+      else{
+         
+      }
+    }
+     anotherMove(array1,array2);
+     console.log('false');
+} 
 if (p1 == 'X' && p2 == 'CPU_O') {
-  playerTwo = new CpuPlayer('o_cpu_player2');
   x_score_label.innerHTML = 'X (YOU)';
   o_score_label.innerHTML = 'O (CPU)';
 }
 else if (p1 == 'O' && p2 == 'CPU_X') {
-  playerTwo = new CpuPlayer('x_cpu_player2')
   x_score_label.innerHTML = 'X (CPU)';
   o_score_label.innerHTML = 'O (YOU)';
-  playerTwo.move(xElementArray, oElementArray);
+ move(xElementArray, oElementArray);
   nextTurn();
   // console.log(number_of_x+'xxxx');
 }
-// getting the computer to automatically try an win the game when there is an opening
-function tryToWin(currentPlayer){
+// getting the computer to automatically try and win the game when there is an opening
+function tryToWin(userArray,opponentArray) {
   // if(array[0].style.display == 'block' && array[])
-  switch(currentPlayer){
-    case 'CPU_X': for(let x = 0; x<=7;x++){
-    const winCondition = winningConditions[x];
-    let a = xElementArray[winCondition[0]].style.display;
-    let b = xElementArray[winCondition[1]].style.display;
-    let c = xElementArray[winCondition[2]].style.display;
-
-    let aOther = oElementArray[winCondition[0]].style.display;
-    let bOther = oElementArray[winCondition[1]].style.display;
-    let cOther = oElementArray[winCondition[2]].style.display;
-    if (a ===  b && b !== c && cOther === 'none') {
-      console.log('gooood');
-      c = 'block';
-    }
-    else if(a ===  c && c !== b && bOther === 'none'){
-      b = 'block';
-    }
-    else if(b ===  c && a !== a && aOther === 'none'){
-      a = 'block';
-    }
-    } 
-    break;
-    case 'CPU_O':for(let x = 0; x<=7;x++){
+ for (let x = 0; x <= 7; x++) {
       const winCondition = winningConditions[x];
-      let a = oElementArray[winCondition[0]].style.display;
-      let b = oElementArray[winCondition[1]].style.display;
-      let c = oElementArray[winCondition[2]].style.display;
-  
-      let aOther = xElementArray[winCondition[0]].style.display;
-      let bOther = xElementArray[winCondition[1]].style.display;
-      let cOther = xElementArray[winCondition[2]].style.display;
-      if (a ===  b && b !== c && cOther === 'none') {
-        console.log('gooood');
-        c = 'block';
+      var a = userArray[winCondition[0]].style.display;
+      var b = userArray[winCondition[1]].style.display;
+      var c = userArray[winCondition[2]].style.display;
+
+      var aOther = opponentArray[winCondition[0]].style.display;
+      var bOther = opponentArray[winCondition[1]].style.display;
+      var cOther = opponentArray[winCondition[2]].style.display;
+      console.log(a+'a'+b+'b'+c+'c');
+      var emptySlot = '';
+      var rvmArray = [];
+      if (a === 'block' && b === 'block' && b !== c && cOther === 'none') {
+        console.log(cOther+'cOther');
+        emptySlot = winCondition[2];//eg.3
+        console.log(emptySlot+'emptySlot');
+        rvmArray = reversedValidMove[winCondition[2]];
+        console.log(rvmArray+'rvmarray');
+        for (let x = 0; x < rvmArray.length; x++) {
+          if (userArray[rvmArray[x]].style.display === 'block') {
+                userArray[rvmArray[x]].style.display = 'none';
+                userArray[winCondition[2]].style.display = 'block';
+                win();
+                console.log('tried to win');
+                return;
+          }
+        }
       }
-      else if(a ===  c && c !== b && bOther === 'none'){
-        b = 'block';
+      else if (a === 'block' && c === 'block' && c !== b && bOther === 'none') {
+        console.log(bOther+'bOther');
+        emptySlot = winCondition[1];//eg.3
+        console.log(emptySlot+'emptySlot');
+        rvmArray = reversedValidMove[winCondition[1]];
+        console.log(rvmArray+'rvmarray');
+        for (let x = 0; x < rvmArray.length; x++) {
+          if (userArray[rvmArray[x]].style.display === 'block') {
+                userArray[rvmArray[x]].style.display = 'none';
+                userArray[winCondition[1]].style.display = 'block';
+                win();
+                console.log('tried to win');
+                return;
+          }
+        }
       }
-      else if(b ===  c && a !== a && aOther === 'none'){
-        a = 'block';
+      else if (b === 'block' && c ===  'block' && c !== a && aOther === 'none') {
+        console.log(aOther+'aOther');
+        emptySlot = winCondition[0];//eg.3
+        console.log(emptySlot+'emptySlot');
+        rvmArray = reversedValidMove[winCondition[0]];
+        console.log(rvmArray+'rvmarray');
+        for (let x = 0; x < rvmArray.length; x++) {
+          if (userArray[rvmArray[x]].style.display === 'block') {
+                userArray[rvmArray[x]].style.display = 'none';
+                userArray[winCondition[0]].style.display = 'block';
+                win();
+                console.log('tried to win');
+                return;
+          }
+        }
       }
-      } 
-      break;
-  }
+      anotherMove(userArray,opponentArray);
+    }
 }
-function blockMove(currentPlayer){
+function check(currentPlayer) {
   // if(array[0].style.display == 'block' && array[])
-  switch(currentPlayer){
-    case 'CPU_X': for(let x = 0; x<=7;x++){ 
-    const winCondition = winningConditions[x];
-    let a = xElementArray[winCondition[0]].style.display;
-    let b = xElementArray[winCondition[1]].style.display;
-    let c = xElementArray[winCondition[2]].style.display;
+  switch (currentPlayer) {
+    case 'CPU_X':
+      let xblockArray = [];// stores x tiles that are block
+      let oblockArray = [];// stores o tiles that are block
+      for (let x = 0; x < xElementArray.length; x++) {
+        if (xElementArray[x].style.display == 'block') {
+          var id = xElementArray[x].id;
+          xblockArray.push(id[1]);
+        } 
+      }
+      for (let x = 0; x < oElementArray.length; x++) {
+        if (oElementArray[x].style.display == 'block') {
+          var id = oElementArray[x].id;
+          oblockArray.push(id[1]);
+        }
+      }
+      for (let x = 0; x <= 7; x++) {
+        const winCondition = winningConditions[x];
+        let a = oElementArray[winCondition[0]].style.display;
+        let b = oElementArray[winCondition[1]].style.display;
+        let c = oElementArray[winCondition[2]].style.display;
 
-    let aOther = oElementArray[winCondition[0]].style.display;
-    let bOther = oElementArray[winCondition[1]].style.display;
-    let cOther = oElementArray[winCondition[2]].style.display;
-    if (a ===  b && b !== c && cOther === 'none') {
-      console.log('gooood');
-      c = 'block';
-    }
-    else if(a ===  c && c !== b && bOther === 'none'){
-      b = 'block';
-    }
-    else if(b ===  c && a !== a && aOther === 'none'){
-      a = 'block';
-    }
-    } 
-    break;
-    case 'CPU_O':for(let x = 0; x<=7;x++){
+        let aOther = xElementArray[winCondition[0]].style.display;
+        let bOther = xElementArray[winCondition[1]].style.display;
+        let cOther = xElementArray[winCondition[2]].style.display;
+        //if there are 2 tiles that are block with only 1 more tile to complete the win
+        if (a === b && b !== c && cOther === 'none') {
+          //if the next move of the opponent is VALID and can result in a win
+
+
+          var cIndex = reversedValidMove[winCondition[2]]
+          for (x = 0; x < cIndex.length; x++) {
+            if (xElementArray[cIndex[x]].style.display == 'block') {
+              xElementArray[cIndex[x]].style.display == 'none';
+              xElementArray[winCondition[2]].style.display = 'block';
+            }
+          }
+
+          console.log('gooood');
+        }
+        else if (a === c && c !== b && bOther === 'none') {
+          b = 'block';
+        }
+        else if (b === c && a !== a && aOther === 'none') {
+          a = 'block';
+        }
+      }
+      break;
+    case 'CPU_O': for (let x = 0; x <= 7; x++) {
       const winCondition = winningConditions[x];
       let a = oElementArray[winCondition[0]].style.display;
       let b = oElementArray[winCondition[1]].style.display;
       let c = oElementArray[winCondition[2]].style.display;
-  
+
       let aOther = xElementArray[winCondition[0]].style.display;
       let bOther = xElementArray[winCondition[1]].style.display;
       let cOther = xElementArray[winCondition[2]].style.display;
-      if (a ===  b && b !== c && cOther === 'none') {
+      if (a === b && b !== c && cOther === 'none') {
         console.log('noitgooood');
         c = 'block';
       }
-      else if(a ===  c && c !== b && bOther === 'none'){
+      else if (a === c && c !== b && bOther === 'none') {
         b = 'block';
       }
-      else if(b ===  c && a !== a && aOther === 'none'){
+      else if (b === c && a !== a && aOther === 'none') {
         a = 'block';
       }
-      } 
+    }
       break;
   }
 }
-function returnRandomNumber(){
-  let a = Math.floor(Math.random() * 2);
-  return a; 
+function returnRandomNumber() {
+  let a = Math.floor(Math.random() * 3);
+  return a;
+}
+// getting the computer to block opponent's move to prevent winning
+function blockMove(array1, array2) {
+  //array1 is opponent's & array2 is current player
+  for (let x = 0; x <= 7; x++) {
+    const winCondition = winningConditions[x];//eg. 123
+    let a = array1[winCondition[0]].style.display;//1
+    let b = array1[winCondition[1]].style.display;//2
+    let c = array1[winCondition[2]].style.display;//3
+
+    let aOther = array2[winCondition[0]].style.display;
+    let bOther = array2[winCondition[1]].style.display;
+    let cOther = array2[winCondition[2]].style.display;
+    var emptySlot = '';
+    var rvmArray = [];
+    if (a === 'block' && b === 'block' && b !== c && cOther === 'none') {
+      console.log(cOther+'cOther');
+      emptySlot = winCondition[2];//eg.3
+      console.log(emptySlot+'emptySlot');
+      rvmArray = reversedValidMove[winCondition[2]];
+      console.log(rvmArray+'rvmarray');
+      for (let x = 0; x < rvmArray.length; x++) {
+        if (array1[rvmArray[x]].style.display === 'block') {
+          for (let y = 0; y < rvmArray.length; y++) {
+            if (array2[rvmArray[y]].style.display === 'block') {
+              array2[rvmArray[y]].style.display = 'none';
+              array2[winCondition[2]].style.display = 'block';
+              nextTurn();
+              console.log('noitgooood');
+            }
+          }
+        }
+      }
+      return;
+    }
+    else if (a === 'block' && c === 'block' && c !== b && bOther === 'none') {
+      console.log(bOther+'bOther');
+      emptySlot = winCondition[1];//eg.3
+      console.log(emptySlot+'emptySlot');
+      rvmArray = reversedValidMove[winCondition[1]];
+      console.log(rvmArray+'rvmarray');
+      for (let x = 0; x < rvmArray.length; x++) {
+        if (array1[rvmArray[x]].style.display === 'block') {
+          for (let y = 0; y < rvmArray.length; y++) {
+            if (array2[rvmArray[y]].style.display === 'block') {
+              array2[rvmArray[y]].style.display = 'none';
+              array2[winCondition[1]].style.display = 'block';
+              nextTurn();
+              console.log('noitgooood2');
+            }
+          }
+        }
+      }
+      return;
+    }
+    else if (b === 'block' && c ===  'block' && c !== a && aOther === 'none') {
+      console.log(aOther+'aOther');
+      emptySlot = winCondition[0];//eg.3
+      console.log(emptySlot+'emptySlot');
+      rvmArray = reversedValidMove[winCondition[0]];
+      console.log(rvmArray+'rvmarray');
+      for (let x = 0; x < rvmArray.length; x++) {
+        if (array1[rvmArray[x]].style.display === 'block') {
+          for (let y = 0; y < rvmArray.length; y++) {
+            if (array2[rvmArray[y]].style.display === 'block') {
+              array2[rvmArray[y]].style.display = 'none';
+              array2[winCondition[0]].style.display = 'block';
+              nextTurn();
+              console.log('noitgooood3');
+            }
+          }
+        }
+      }
+      return;
+    }
+  }
 }
