@@ -108,7 +108,7 @@ var validMove = [
   [4, 5, 8],
   [4, 5, 6, 7, 9],
   [5, 6, 8]
-]
+];
 var reversedValidMove = [
   [1, 3, 4],
   [0, 2, 3, 4, 5],
@@ -119,15 +119,17 @@ var reversedValidMove = [
   [3, 4, 7],
   [3, 4, 5, 6, 8],
   [4, 5, 7]
-]
-
+];
+//
 if (p1 == 'X' && p2 == 'CPU_O') {
-  x_score_label.innerHTML = 'X(YOU)';
-  o_score_label.innerHTML = 'O(CPU)';
+  x_score_label.innerHTML = 'X (YOU)';
+  o_score_label.innerHTML = 'O (CPU)';
 }
 else if (p1 == 'O' && p2 == 'CPU_X') {
   x_score_label.innerHTML = 'X (CPU)';
   o_score_label.innerHTML = 'O (YOU)';
+  move(xElementArray, oElementArray);
+  nextTurn();
 }
 
 // functions
@@ -345,7 +347,7 @@ function validMovesforO(x_filled, x_outline, o_filled, o_outline) {
   o_filled.style.display = 'block';
   o_outline.style.display = 'none';
 }
-// logic for winning a round
+// logic for X winning a round
 function win() {
   for (let i = 0; i <= 7; i++) {
     const winCondition = winningConditions[i];
@@ -388,7 +390,7 @@ function win() {
     }
   }
 }
-// win o
+// logic for O winning a round
 function winO() {
 
   for (let i = 0; i <= 7; i++) {
@@ -771,6 +773,7 @@ function move(array1, array2) {
         var aOther = array2[winCondition[0]].style.display;
         var bOther = array2[winCondition[1]].style.display;
         var cOther = array2[winCondition[2]].style.display;
+
         // block opponent's move
       if (aOther === 'block' && bOther === 'block' && bOther !== cOther && k === 'none') {
         array1[winCondition[2]].style.display = 'block';
@@ -805,6 +808,8 @@ function move(array1, array2) {
     }
     //TODO try to win from onset   
     else if (lastPositionO == null && number_of_o == 2) {
+        console.log('ddddd');
+
       for (let x = 0; x <= 7; x++) {
         const winCondition = winningConditions[x];
         var i = array1[winCondition[0]].style.display;
@@ -817,20 +822,35 @@ function move(array1, array2) {
         // try win
         if (i === 'block' && j === 'block' && j !== k && cOther === 'none') {
           array1[winCondition[2]].style.display = 'block';
-          win();
+          console.log('a1');
+          winO();
           return;
         }
-        if (i === 'block' && k === 'block' && k !== j && bOther === 'none') {
+        else if (i === 'block' && k === 'block' && k !== j && bOther === 'none') {
           array1[winCondition[1]].style.display = 'block';
-          win();
+          console.log('b2');
+          winO();
           return;
         }
-        if (j === 'block' && k === 'block' && j !== i && aOther === 'none') {
+        else if (j === 'block' && k === 'block' && j !== i && aOther === 'none') {
           array1[winCondition[0]].style.display = 'block';
-          win();
+          console.log('c3');
+          winO();
           return;
         }
-        // block move if neccesary(when win is not achieved)
+        
+      }
+      // block move if neccesary(when win is not achieved)
+      for (let x = 0; x <= 7; x++) {
+        const winCondition = winningConditions[x];
+        var i = array1[winCondition[0]].style.display;
+        var j = array1[winCondition[1]].style.display;
+        var k = array1[winCondition[2]].style.display;
+
+        var aOther = array2[winCondition[0]].style.display;
+        var bOther = array2[winCondition[1]].style.display;
+        var cOther = array2[winCondition[2]].style.display;
+
         if (aOther === 'block' && bOther === 'block' && bOther !== cOther && k === 'none') {
           array1[winCondition[2]].style.display = 'block';
           number_of_o += 1;
@@ -847,8 +867,10 @@ function move(array1, array2) {
           return;
         }
       }
+
+
       // random move
-      for (x = 0; x < 9; x++) {
+      for (let x = 0; x < 9; x++) {
         if (array1[x].style.display === 'none' && array2[x].style.display === 'none') {
           empty.push(x);
         }
@@ -910,17 +932,6 @@ function anotherMove(array1, array2) {
   }
   anotherMove(array1, array2);
   console.log('false');
-}
-if (p1 == 'X' && p2 == 'CPU_O') {
-  x_score_label.innerHTML = 'X (YOU)';
-  o_score_label.innerHTML = 'O (CPU)';
-}
-else if (p1 == 'O' && p2 == 'CPU_X') {
-  x_score_label.innerHTML = 'X (CPU)';
-  o_score_label.innerHTML = 'O (YOU)';
-  move(xElementArray, oElementArray);
-  nextTurn();
-  // console.log(number_of_x+'xxxx');
 }
 // getting the computer to automatically try and win the game when there is an opening
 function tryToWin(userArray, opponentArray) {
