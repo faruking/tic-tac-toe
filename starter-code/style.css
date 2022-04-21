@@ -1,7 +1,7 @@
 body{
     background-color: #1A2A33;
     max-width: 1440px;
-    height: 900px;
+    height: 100vh;
     box-sizing: border-box;
     color: #A8BFC9;
     font-family: Outfit;
@@ -114,7 +114,7 @@ button{
     background:  #A8BFC9;
 }
 #xoro_o:hover{
-    background:#9797970e;
+    /* background:#9797970e; */
 }
 .xoro > img{
     width: 32px;
@@ -286,4 +286,155 @@ h5{
     justify-content: center;
     align-items: center;
     gap: 16px;
+}
+@media  screen and (min-width:1441px) {
+    /* .main_flex{
+        width: 32%;
+        height: 80vh;
+        gap: 5%;
+    }
+    .start_game_flex_item:first-of-type{
+        height: 81px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .start_game_flex_item:nth-of-type(n+2) {
+        width: 100%;
+        height: 100%;
+        row-gap: 1.5vh;
+    }
+    .start_game_flex_item:nth-of-type(n+3) {
+        width: 100%;
+        height: 150px;
+    }
+    button{
+        height: 100%;
+    }
+    .grid_item{
+        width: 100%;
+        height: 18.6vh;
+        border-radius: 15%;
+    }
+    .button_scores{
+        font-size: 3em;
+        line-height: 1em;
+    } */
+        
+}
+@media  screen and (max-width:768px) {
+    .main_flex{
+        width: 59.897%;
+        height: 623px;
+    }
+    .start_game_flex_item:first-of-type{
+        height: 52px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .start_game_flex_item:nth-of-type(n+2){
+        display: grid;
+        justify-content: space-between;
+        gap: 20px;
+        width: 100%;
+        height: auto;
+    }
+    .start_game_flex_item:nth-of-type(n+3){
+        display: grid;
+        justify-content: space-between;
+        grid-template-rows: auto;
+        gap: 20px;
+        width: 100%;
+        height: auto;
+    }
+    .grid_item{
+        width: 100%;
+        height: 140px;
+    }
+}
+@media  screen and (max-width:375px) {
+    .main_flex{
+        width: 91.368%;
+        height: 623px;
+    }
+  
+    .start_game_ifi:nth-of-type(n+3){
+        height: 40px;
+        width: 40px;
+    }
+    .start_game_flex_item:first-of-type{
+        height: 40px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .start_game_flex_item:nth-of-type(n+2){
+        display: grid;
+        justify-content: space-between;
+        gap: 20px;
+        width: 100%;
+        height: auto;
+    }
+    .start_game_flex_item:nth-of-type(n+3){
+        margin-top: 0;
+        display: grid;
+        justify-content: space-between;
+        grid-template-rows: auto;
+        gap: 20px;
+        height: 64px;
+    }
+    .grid_item{
+        height: 96px;
+    }
+    button{
+        height: 64px;
+    }
+    .image{
+        width: 40px;
+        height: 40px;
+    }
+    .main_flex{
+        position: relative;
+        transform: translate(0,0);
+        top: 0;
+        left: 0;
+    }
+}
+@media  screen and (max-width:425px) {
+    .game_area{
+        width: 90%;
+        height: 429px;
+        gap: 24px;
+    }
+    .main_flex{
+        width: 91.368%;
+        height: 623px;
+        top: 0;
+        left: 0;
+        transform: translate(0,0);
+        position: relative;
+    }
+    .grid_item{
+        height: 112px;
+    }
+    .start_game_flex_item:first-of-type{
+        margin-top: 5%;
+    }
+    .start_game_flex_item:nth-of-type(n+2){
+        margin-top: 15%;
+    }
+    .start_game_flex_item:nth-of-type(n+3){
+        margin-top: 0;
+    }
+    .image{
+        width: 48px;
+        height: 48px;    
+    }
 }

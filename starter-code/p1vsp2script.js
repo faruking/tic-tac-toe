@@ -49,9 +49,43 @@ var o7_filled = document.getElementById('o7_filled');
 var o8_filled = document.getElementById('o8_filled');
 var o9_filled = document.getElementById('o9_filled');
 
+
+var x1_outline = document.getElementById('x1_outline');
+var x2_outline = document.getElementById('x2_outline');
+var x3_outline = document.getElementById('x3_outline');
+var x4_outline = document.getElementById('x4_outline');
+var x5_outline = document.getElementById('x5_outline');
+var x6_outline = document.getElementById('x6_outline');
+var x7_outline = document.getElementById('x7_outline');
+var x8_outline = document.getElementById('x8_outline');
+var x9_outline = document.getElementById('x9_outline');
+
+var o1_outline = document.getElementById('o1_outline');
+var o2_outline = document.getElementById('o2_outline');
+var o3_outline = document.getElementById('o3_outline');
+var o4_outline = document.getElementById('o4_outline');
+var o5_outline = document.getElementById('o5_outline');
+var o6_outline = document.getElementById('o6_outline');
+var o7_outline = document.getElementById('o7_outline');
+var o8_outline = document.getElementById('o8_outline');
+var o9_outline = document.getElementById('o9_outline');
+
+var tile1 = document.getElementById('first_tile');
+var tile2 = document.getElementById('second_tile');
+var tile3 = document.getElementById('third_tile');
+var tile4 = document.getElementById('fourth_tile');
+var tile5 = document.getElementById('fifth_tile');
+var tile6 = document.getElementById('sixth_tile');
+var tile7 = document.getElementById('seventh_tile');
+var tile8 = document.getElementById('eight_tile');
+var tile9 = document.getElementById('ninth_tile');
+
 var elementArray = [x1_filled, x2_filled, x3_filled, x4_filled, x5_filled, x6_filled, x7_filled, x8_filled, x9_filled, o1_filled, o2_filled, o3_filled, o4_filled, o5_filled, o6_filled, o7_filled, o8_filled, o9_filled];
 var xElementArray = [x1_filled, x2_filled, x3_filled, x4_filled, x5_filled, x6_filled, x7_filled, x8_filled, x9_filled];
 var oElementArray = [o1_filled, o2_filled, o3_filled, o4_filled, o5_filled, o6_filled, o7_filled, o8_filled, o9_filled];
+var xOutlineArray = [x1_outline, x2_outline, x3_outline, x4_outline, x5_outline, x6_outline, x7_outline, x8_outline, x9_outline];
+var oOutlineArray = [o1_outline, o2_outline, o3_outline, o4_outline, o5_outline, o6_outline, o7_outline, o8_outline, o9_outline];
+var tileArray = [tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8, tile9]
 //  console.log(numberRounded);
 var gameState = ["", "", "", "", "", "", "", "", ""]
 var winningConditions = [
@@ -239,6 +273,16 @@ function restart() {
   for (x = 0; x < elementArray.length; x++) {
     elementArray[x].style.display = 'none';
   }
+  for (x = 0; x < oOutlineArray.length; x++) {
+    oOutlineArray[x].style.display = 'none';
+  }
+  for (x = 0; x < xOutlineArray.length; x++) {
+    xOutlineArray[x].style.display = 'none';
+  }
+  for (x = 0; x < tileArray.length; x++) {
+    tileArray[x].style.backgroundColor = '';
+    tileArray[x].style.background = '';
+  } 
   var score = document.getElementById('o_scores');
   cpu_score = 0;
   player1_score = 0;
@@ -289,12 +333,32 @@ function win() {
     if (a === b && b === c) {
       var p2 = localStorage.getItem('player_two');
       switch (p2) {
-        case 'PLAYER_TWO_X': win_status.innerHTML = 'PLAYER 2 WINS!';
+        case 'PLAYER_TWO_X': 
+          xElementArray[winCondition[0]].style.display = 'none';
+          xElementArray[winCondition[1]].style.display = 'none';
+          xElementArray[winCondition[2]].style.display = 'none';
+          xOutlineArray[winCondition[0]].style.display = 'block';
+          xOutlineArray[winCondition[1]].style.display = 'block';
+          xOutlineArray[winCondition[2]].style.display = 'block';
+          tileArray[winCondition[0]].style.backgroundColor = '#31C3BD';
+          tileArray[winCondition[1]].style.backgroundColor = '#31C3BD';
+          tileArray[winCondition[2]].style.backgroundColor = '#31C3BD';
+          win_status.innerHTML = 'PLAYER 2 WINS!';
           winloss_dialog.style.display = 'flex';
           x_wins.style.display = 'flex';
           o_wins.style.display = 'none';
           break;
-        case 'PLAYER_TWO_O': win_status.innerHTML = 'PLAYER 1 WINS!';
+        case 'PLAYER_TWO_O':
+          xElementArray[winCondition[0]].style.display = 'none';
+          xElementArray[winCondition[1]].style.display = 'none';
+          xElementArray[winCondition[2]].style.display = 'none';
+          xOutlineArray[winCondition[0]].style.display = 'block';
+          xOutlineArray[winCondition[1]].style.display = 'block';
+          xOutlineArray[winCondition[2]].style.display = 'block';
+          tileArray[winCondition[0]].style.backgroundColor = '#31C3BD';
+          tileArray[winCondition[1]].style.backgroundColor = '#31C3BD';
+          tileArray[winCondition[2]].style.backgroundColor = '#31C3BD';  
+          win_status.innerHTML = 'PLAYER 1 WINS!';
           winloss_dialog.style.display = 'flex';
           x_wins.style.display = 'flex';
           o_wins.style.display = 'none';
@@ -322,12 +386,32 @@ function winO() {
       var p2 = localStorage.getItem('player_two');
       switch (p2) {
 
-        case 'PLAYER_TWO_X': win_status.innerHTML = 'PLAYER 1 WINS!';
+        case 'PLAYER_TWO_X': 
+        oElementArray[winCondition[0]].style.display = 'none';
+        oElementArray[winCondition[1]].style.display = 'none';
+        oElementArray[winCondition[2]].style.display = 'none';
+        oOutlineArray[winCondition[0]].style.display = 'block';
+        oOutlineArray[winCondition[1]].style.display = 'block';
+        oOutlineArray[winCondition[2]].style.display = 'block';
+        tileArray[winCondition[0]].style.backgroundColor = '#F2B137';
+        tileArray[winCondition[1]].style.backgroundColor = '#F2B137';
+        tileArray[winCondition[2]].style.backgroundColor = '#F2B137';
+          win_status.innerHTML = 'PLAYER 1 WINS!';
           winloss_dialog.style.display = 'flex';
           x_wins.style.display = 'none';
           o_wins.style.display = 'flex';
           break;
-        case 'PLAYER_TWO_O': win_status.innerHTML = 'PLAYER 2 WINS!';
+        case 'PLAYER_TWO_O': 
+        oElementArray[winCondition[0]].style.display = 'none';
+        oElementArray[winCondition[1]].style.display = 'none';
+        oElementArray[winCondition[2]].style.display = 'none';
+        oOutlineArray[winCondition[0]].style.display = 'block';
+        oOutlineArray[winCondition[1]].style.display = 'block';
+        oOutlineArray[winCondition[2]].style.display = 'block';
+        tileArray[winCondition[0]].style.backgroundColor = '#F2B137';
+        tileArray[winCondition[1]].style.backgroundColor = '#F2B137';
+        tileArray[winCondition[2]].style.backgroundColor = '#F2B137';
+          win_status.innerHTML = 'PLAYER 2 WINS!';
           winloss_dialog.style.display = 'flex';
           x_wins.style.display = 'none';
           o_wins.style.display = 'flex';
@@ -362,7 +446,16 @@ function resume() {
   for (x = 0; x < elementArray.length; x++) {
     elementArray[x].style.display = 'none';
   }
-  var score = document.getElementById('cpu_scores');
+  for (x = 0; x < oOutlineArray.length; x++) {
+    oOutlineArray[x].style.display = 'none';
+  }
+  for (x = 0; x < xOutlineArray.length; x++) {
+    xOutlineArray[x].style.display = 'none';
+  }
+  for (x = 0; x < tileArray.length; x++) {
+    tileArray[x].style.backgroundColor = '';
+    tileArray[x].style.background = '';
+  } 
   number_of_o = 0;
   number_of_x = 0;
   lastPositionX = null;

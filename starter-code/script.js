@@ -198,11 +198,17 @@ function onMouseClick(x, image, o, o_outline,) {
               if (ind == validMovement[x]) {
                 validMovesforX(x_filled, x_outline, o_filled, o_outline);
                 win();
-                ties(ind);
-                if (number_of_o == 3 && p2 == 'CPU_O') {
-                  move(oElementArray, xElementArray);
-                  winO();
+                if(winloss_dialog.style.display !== 'flex'){
+                  ties(ind);
+                  if(game_tied_dialog.style.display !== 'flex'){
+                    if (number_of_o == 3 && p2 == 'CPU_O') {
+                      move(oElementArray, xElementArray);
+                      winO();
+                    }
+                  }
+            
                 }
+               
                 return;
               }
             }
@@ -261,11 +267,16 @@ function onMouseClick(x, image, o, o_outline,) {
               if (ind == validMovement[x]) {
                 validMovesforO(x_filled, x_outline, o_filled, o_outline);
                 winO();
-                tiesO(ind);
-                if (number_of_x == 3 && p2 == 'CPU_X') {
-                  tryToWin(xElementArray, oElementArray);
-                  // move(xElementArray, oElementArray, number_of_x);
+                if(winloss_dialog.style.display !== 'flex'){
+                  tiesO(ind);
+                  if(game_tied_dialog.style.display !== 'flex'){
+                    if (number_of_x == 3 && p2 == 'CPU_X') {
+                      tryToWin(xElementArray, oElementArray);
+                    }
+                  }
+            
                 }
+               
                 return;
               }
             }
@@ -361,7 +372,7 @@ function win() {
       var p2 = localStorage.getItem('player_two');
       switch (p2) {
         case 'CPU_X': {
-          win_status.innerHTML = 'OH NO, YOU LOST...';
+          // styling the tiles 
           xElementArray[winCondition[0]].style.display = 'none';
           xElementArray[winCondition[1]].style.display = 'none';
           xElementArray[winCondition[2]].style.display = 'none';
@@ -371,13 +382,22 @@ function win() {
           tileArray[winCondition[0]].style.backgroundColor = '#31C3BD';
           tileArray[winCondition[1]].style.backgroundColor = '#31C3BD';
           tileArray[winCondition[2]].style.backgroundColor = '#31C3BD';
-          // x1_outline.style.display= 'block';
+          win_status.innerHTML = 'OH NO, YOU LOST...';
           winloss_dialog.style.display = 'flex';
           x_wins.style.display = 'flex';
           o_wins.style.display = 'none';
         }
           break;
         case 'CPU_O': win_status.innerHTML = 'YOU WON!';
+        xElementArray[winCondition[0]].style.display = 'none';
+        xElementArray[winCondition[1]].style.display = 'none';
+        xElementArray[winCondition[2]].style.display = 'none';
+        xOutlineArray[winCondition[0]].style.display = 'block';
+        xOutlineArray[winCondition[1]].style.display = 'block';
+        xOutlineArray[winCondition[2]].style.display = 'block';
+        tileArray[winCondition[0]].style.backgroundColor = '#31C3BD';
+        tileArray[winCondition[1]].style.backgroundColor = '#31C3BD';
+        tileArray[winCondition[2]].style.backgroundColor = '#31C3BD';
           winloss_dialog.style.display = 'flex';
           x_wins.style.display = 'flex';
           o_wins.style.display = 'none';
@@ -405,7 +425,17 @@ function winO() {
       var p2 = localStorage.getItem('player_two');
       switch (p2) {
 
-        case 'CPU_X': win_status.innerHTML = 'YOU WON!';
+        case 'CPU_X': 
+          oElementArray[winCondition[0]].style.display = 'none';
+          oElementArray[winCondition[1]].style.display = 'none';
+          oElementArray[winCondition[2]].style.display = 'none';
+          oOutlineArray[winCondition[0]].style.display = 'block';
+          oOutlineArray[winCondition[1]].style.display = 'block';
+          oOutlineArray[winCondition[2]].style.display = 'block';
+          tileArray[winCondition[0]].style.backgroundColor = '#F2B137';
+          tileArray[winCondition[1]].style.backgroundColor = '#F2B137';
+          tileArray[winCondition[2]].style.backgroundColor = '#F2B137';
+          win_status.innerHTML = 'YOU WON!';
           winloss_dialog.style.display = 'flex';
           x_wins.style.display = 'none';
           o_wins.style.display = 'flex';
@@ -464,7 +494,8 @@ function resume() {
   for (x = 0; x < tileArray.length; x++) {
     tileArray[x].style.backgroundColor = '';
     tileArray[x].style.background = '';
-  } number_of_o = 0;
+  } 
+  number_of_o = 0;
   number_of_x = 0;
   lastPositionX = null;
   lastPositionO = null;
@@ -714,7 +745,17 @@ function move(array1, array2) {
           win();
           return;
         }
-        // block move if neccesary(when win is not achieved)
+      }
+      // block move if neccesary(when win is not achieved)
+      for (let x = 0; x <= 7; x++) {
+        const winCondition = winningConditions[x];
+        var i = array1[winCondition[0]].style.display;
+        var j = array1[winCondition[1]].style.display;
+        var k = array1[winCondition[2]].style.display;
+
+        var aOther = array2[winCondition[0]].style.display;
+        var bOther = array2[winCondition[1]].style.display;
+        var cOther = array2[winCondition[2]].style.display;
         if (aOther === 'block' && bOther === 'block' && bOther !== cOther && k === 'none') {
           array1[winCondition[2]].style.display = 'block';
           number_of_x += 1;

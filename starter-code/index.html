@@ -68,6 +68,18 @@
    o_silver.style.display = '';
   //  player_one = 'X';
    localStorage.setItem('player_one','X');
+   elementO.onmouseover=function(){
+     elementO.style.background='#9797970e';
+   }
+   elementO.onmouseout=function(){
+     elementO.style.background='none';
+   }
+   element.onmouseover = function(){
+    element.style.background = "#A8BFC9";
+   }
+   element.onmouseout= function(){
+    element.style.background = "#A8BFC9";
+   }
   }
   elementO.onclick = function(){
    elementO.style.background = "#A8BFC9";
@@ -78,6 +90,18 @@
    x_silver.style.display = '';
   //  player_one = 'O';
    localStorage.setItem('player_one','O');
+   elementO.onmouseover=function(){
+     elementO.style.background='';
+   }
+   elementO.onmouseout=function(){
+     elementO.style.background='';
+   }
+   element.onmouseover=function(){
+     element.style.background='#9797970e';
+   }
+   element.onmouseout=function(){
+     element.style.background='';
+   }
   }
   button_yellow.onclick = ()=>{
    location.href = 'start_game.html';
