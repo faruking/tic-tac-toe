@@ -335,6 +335,10 @@ function restart() {
   x_turn.style.display = 'block';
   o_turn.style.display = 'none';
   score.innerHTML = cpu_score;
+  if(p2 == 'CPU_X'){
+    move(xElementArray,oElementArray);
+    nextTurn();
+  }
 }
 // ensuring only valid moves are made
 function validMovesforX(x_filled, x_outline, o_filled, o_outline) {
@@ -388,7 +392,8 @@ function win() {
           o_wins.style.display = 'none';
         }
           break;
-        case 'CPU_O': win_status.innerHTML = 'YOU WON!';
+        case 'CPU_O': {
+          win_status.innerHTML = 'YOU WON!';
         xElementArray[winCondition[0]].style.display = 'none';
         xElementArray[winCondition[1]].style.display = 'none';
         xElementArray[winCondition[2]].style.display = 'none';
@@ -401,6 +406,7 @@ function win() {
           winloss_dialog.style.display = 'flex';
           x_wins.style.display = 'flex';
           o_wins.style.display = 'none';
+        }
           break;
         default: console.log('error with win function');
       }
