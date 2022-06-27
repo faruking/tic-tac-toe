@@ -13,12 +13,14 @@ body{
     letter-spacing: 1px;
 }
 .tooltip {
-    position: relative;
+    margin-left: -2.9%;
+    position: fixed;
     display: inline-block;
     border-bottom: 1px dashed #fff;
     padding: 4px;
     border-radius: 8px;
     font-size: small;
+    z-index: 1;
   }
   
   /* Tooltip text */
